@@ -1,0 +1,6 @@
+<button bindtap="getStatus">查询状态</button>
+<button bindtap="open">开启蓝牙</button>
+<button bindtap="startScan">启动扫描</button>
+<button bindtap="stopScan">停止扫描</button>
+<button bindtap="getDevices">获取设备</button>
+<button bindtap="close">关闭蓝牙</button>
