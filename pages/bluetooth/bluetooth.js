@@ -9,29 +9,33 @@ Page({
   },
   startScan: function (e) {
     scanner.startScan({
-      services: ['FEE6'],
+      services: ['FEE7'],
       allowDuplicatesKey: false,
       interval: 0,
-      timeout: 10,
-      timeoutCallback: function (res) {
-        console.log('APP timeoutCallback', res);
-      },
-      started: function (res) {
-        console.log('APP started', res);
-      },
-      failed: function (err) {
-        console.log('APP failed', res);
-      },
-      closed: function (err) {
+      scanTime: 10,
+      closed: function (res) {
         console.log('APP closed', res);
       },
-      found: function (device) {
-        console.log('APP found', device);
+      timeout:function(res){
+        console.log('APP timeout', res);
       },
+      failed:function(res){
+        console.log('APP failed', res);
+      },
+      started:function(res){
+        console.log('APP started', res);
+      },
+      found:function(res){
+        console.log('APP found', res);
+      }
     });
   },
   getDevices: function (e) {
-    // scanner.getBluetoothDevices({});
+    scanner.getDevices({
+      success: function (res) {
+        console.log(res)
+      }
+    })
   },
   stopScan: function (e) {
     scanner.stopScan();
