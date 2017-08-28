@@ -5,8 +5,12 @@
   <button size='default' bindtap="close">关闭蓝牙</button>
 </view>
 
-<radio-group class="radio-group">
+<radio-group class="radio-group" bindchange="radioChange">
   <label class="radio" wx:for="{{items}}" wx:key="{{itme.deviceId}}">
-    <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.advertisDataHexString}}
+    <radio value="{{item.deviceId}}" checked="{{item.checked}}"/>{{item.advertisDataHexString}}
   </label>
 </radio-group>
+
+<view>
+  <button size='default' bindtap="connect">连接设备</button>
+</view>

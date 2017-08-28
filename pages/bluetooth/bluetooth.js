@@ -1,15 +1,12 @@
 var scanner = require('../../lib/bluetooth/scanner')
 var divices = [];
+var selectedDeviceID;
 
 Page({
   data: {
     items: []
   },
   onLoad() {
-  },
-  getStatus: function (e) {
-  },
-  open: function (e) {
   },
   startScan: function (e) {
     var that = this;
@@ -61,5 +58,20 @@ Page({
   },
   close: function (e) {
     scanner.close();
+  },
+  radioChange: function (e) {
+    console.log('radio发生change事件', e);
+    selectedDeviceID = e.detail.value;
+  },
+  connect:function(e){
+    wx.createBLEConnection({
+      deviceId: selectedDeviceID,
+      success: function(res) {
+        console.log(res);
+      },
+      fail:function(err){
+        console.log(err);
+      }
+    })
   }
 })
