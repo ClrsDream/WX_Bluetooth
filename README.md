@@ -13,7 +13,7 @@
 
 5)初始化蓝牙适配器(wx.openBluetoothAdapter(OBJECT))、获取本机蓝牙适配器状态(wx.getBluetoothAdapterState(OBJECT))，这两个函数那个先调用不好说，自己玩吧，见下说明。
 
-# 一些BUG，
+# 一些BUG
 1)蓝牙在扫描过程中，获取本机蓝牙适配器状态(wx.getBluetoothAdapterState(OBJECT))。（Android独有，华为荣耀8、VIVO 7plus，6.5.13）
 
 available\Boolean\蓝牙适配器是否可用，值为true。
