@@ -1,8 +1,8 @@
-# 微信小程序蓝牙
+# 微信小程序蓝牙代码与错误整理
 
 微信小程序整体上是很不错的，蓝牙接口的确“坑”，“网络端”的程序猿做“硬件接口”，哎。
 
-# 一些麻烦事儿
+## 一些麻烦事儿
 1)蓝牙设备比较多会把手机卡死，公司能扫描到200+个设备，直接把iphone5S的微信卡死了。
 
 2)每次硬件操作之间一定加延迟，建议100ms，例如“打开蓝牙”与“开始扫描”间，“连接成功”与“获取服务”等等之类。不使用延迟可能会出现莫名其妙的错误，多见于Android端。
@@ -13,7 +13,7 @@
 
 5)初始化蓝牙适配器(wx.openBluetoothAdapter(OBJECT))、获取本机蓝牙适配器状态(wx.getBluetoothAdapterState(OBJECT))，这两个函数那个先调用不好说，自己玩吧，见下说明。
 
-# 一些BUG
+## 一些BUG
 1)蓝牙在扫描过程中，获取本机蓝牙适配器状态(wx.getBluetoothAdapterState(OBJECT))。（Android独有，华为荣耀8、VIVO 7plus，6.5.13）
 
 available\Boolean\蓝牙适配器是否可用，值为true。
@@ -32,7 +32,7 @@ https://github.com/FFiot/WX_Bluetooth/issues/3
 
 4)蓝牙在扫描service下character时，如果有多个service，只能正常获取第一个service下的character，其余service获取的chara与第一个service相同。（IOS独有，IPHONE5s，微信6.5.15）
 
-# 移动设备蓝牙开启\关闭用两种状态
+## 移动设备蓝牙开启\关闭用两种状态
 
 1)wx.getBluetoothAdapterState(OBJECT)
 
