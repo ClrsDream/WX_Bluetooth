@@ -16,7 +16,9 @@
       https://github.com/FFiot/WX_Bluetooth/issues/1
     2)蓝牙在扫描过程中，再次启动扫描wx.startBluetoothDevicesDiscovery(OBJECT)：fail，errCode=10008。
       https://github.com/FFiot/WX_Bluetooth/issues/2
-	
+	3)errorCode与errMsg混在一起， IOS独有，IPHONE5s，6.5.15。
+	  https://github.com/FFiot/WX_Bluetooth/issues/3
+	4)蓝牙在扫描service下character时，如果有多个service，只能正常获取第一个service下的character，其余service获取的chara与第一个service相同。IOS独有，IPHONE5s，6.5.15。
 移动设备蓝牙开启\关闭用两种状态
 
 	1)wx.getBluetoothAdapterState(OBJECT)
