@@ -11,11 +11,11 @@
 一些BUG，全部出现在Android端，华为荣耀8、VIVO 7plus测试均存在
 
 	1)蓝牙在扫描过程中，获取本机蓝牙适配器状态(wx.getBluetoothAdapterState(OBJECT))。
-	available\Boolean\蓝牙适配器是否可用，值为true。
-	discovering\Boolean\是否正在搜索设备，值为false。
-	https://github.com/FFiot/WX_Bluetooth/issues/1
+	  available\Boolean\蓝牙适配器是否可用，值为true。
+	  discovering\Boolean\是否正在搜索设备，值为false。
+      https://github.com/FFiot/WX_Bluetooth/issues/1
     2)蓝牙在扫描过程中，再次启动扫描wx.startBluetoothDevicesDiscovery(OBJECT)：fail，errCode=10008。
-	https://github.com/FFiot/WX_Bluetooth/issues/2
+      https://github.com/FFiot/WX_Bluetooth/issues/2
 	
 移动设备蓝牙开启\关闭用两种状态
 

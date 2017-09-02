@@ -1,120 +1,77 @@
+var scanner = require('../../lib/bluetooth/scanner')
+var divices = [];
+var selectedDeviceID;
+
 Page({
   data: {
+    items: []
   },
-  getStatus: function (e) {
-    console.log('wx.getBluetoothAdapterState');
-    wx.getBluetoothAdapterState({
-      success: (res) => {
-        console.log(res);
-      },
-      fail: (err) => {
-        console.log(err);
-      }
-    })
-  },
-  open: function (e) {
-    console.log('wx.openBluetoothAdapter');
-    wx.openBluetoothAdapter({
-      success: (res) => {
-        console.log(res);
-      },
-      fail: (err) => {
-        console.log(err);
-      }
-    });
+  onLoad() {
   },
   startScan: function (e) {
-    console.log('startBluetoothDevicesDiscovery');
-    wx.startBluetoothDevicesDiscovery({
+    var that = this;
+
+    divices = [];
+    that.setData({
+      items: divices
+    })
+
+    scanner.startScan({
       services: ['FEE7'],
       allowDuplicatesKey: false,
       interval: 0,
-      success: (res) => {
-        console.log(res);
+      scanTime: 10,
+      closed: function (res) {
+        console.log('APP closed', res);
       },
-      fail: (err) => {
-        console.log(err);
+      timeout: function (res) {
+        console.log('APP timeout', res);
+        console.log(divices.length);
+        that.setData({
+          items: divices
+        })
+      },
+      failed: function (res) {
+        console.log('APP failed', res);
+      },
+      started: function (res) {
+        console.log('APP started', res);
+      },
+      found: function (device) {
+        console.log('APP found', device);
+        divices.push(device);
+        that.setData({
+          items: divices
+        })
+      }
+    });
+  },
+  getDevices: function (e) {
+    scanner.getDevices({
+      success: function (res) {
+        console.log(res)
       }
     })
   },
   stopScan: function (e) {
-    console.log('stopBluetoothDevicesDiscovery');
-    wx.stopBluetoothDevicesDiscovery({
-      success: function (res) {
-        console.log(res);
-      },
-      fail: (err) => {
-        console.log(err);
-      }
-    })
-  },
-  getDevices: function (e) {
-    console.log('getBluetoothDevices');
-    wx.getBluetoothDevices({
-      success: (res) => {
-        console.log(res);
-      }, fail: (err) => {
-        console.log(err);
-      }
-    })
+    scanner.stopScan();
   },
   close: function (e) {
-    console.log('closeBluetoothAdapter');
-      wx.closeBluetoothAdapter({
-        success: (res) => {
-          console.log(res);
-        },
-        fail: (err) => {
-          console.log(err);
-        }
-      })
+    scanner.close();
+  },
+  radioChange: function (e) {
+    console.log('radio发生change事件', e);
+    selectedDeviceID = e.detail.value;
+  },
+  connect:function(e){
+    wx.createBLEConnection({
+      deviceId: selectedDeviceID,
+      success: function(res) {
+        console.log(res);
+      },
+      fail:function(err){
+        console.log(err);
+      }
+    })
   }
 })
-wx.onBluetoothAdapterStateChange(function (res) {
-  console.log(`adapterState changed, now is`, res);
-})
-
-wx.onBluetoothDeviceFound(function (res) {
-  console.log('new device list has founded');
-  for (var i = 0; i < res.devices.length; i++){
-    var device = res.devices[i];
-    device.advertisDataStr = arrayBufferToHexString(device.advertisData);
-    console.log(device);
-  }
-})
-
-var arrayBufferToHexString = function (buffer) {
-  let bufferType = Object.prototype.toString.call(buffer)
-  if (buffer != '[object ArrayBuffer]') {
-    return
-  }
-  let dataView = new DataView(buffer)
-
-  var hexStr = '';
-  for (var i = 0; i < dataView.byteLength; i++) {
-    var str = dataView.getUint8(i)
-    var hex = (str & 0xff).toString(16);
-    hex = (hex.length === 1) ? '0' + hex : hex;
-    hexStr += hex;
-  }
-
-  return hexStr.toUpperCase();
-}
-
-var hexStringToArrayBuffer = function (str) {
-  if (!str) {
-    return new ArrayBuffer(0);
-  }
-
-  var buffer = new ArrayBuffer(16);
-  let dataView = new DataView(buffer)
-
-  let ind = 0;
-  for (var i = 0, len = str.length; i < len; i += 2) {
-    let code = parseInt(str.substr(i, 2), 16)
-    dataView.setUint8(ind, code)
-    ind++
-  }
-
-  return buffer;
-}

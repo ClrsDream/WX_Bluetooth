@@ -1,6 +1,16 @@
-<button bindtap="getStatus">查询状态</button>
-<button bindtap="open">开启蓝牙</button>
-<button bindtap="startScan">启动扫描</button>
-<button bindtap="stopScan">停止扫描</button>
-<button bindtap="getDevices">获取设备</button>
-<button bindtap="close">关闭蓝牙</button>
+<view>
+  <button size='default' bindtap="startScan">启动扫描</button>
+  <button size='default' bindtap="stopScan">停止扫描</button>
+  <button size='default' bindtap="getDevices">获取设备</button>
+  <button size='default' bindtap="close">关闭蓝牙</button>
+</view>
+
+<radio-group class="radio-group" bindchange="radioChange">
+  <label class="radio" wx:for="{{items}}" wx:key="{{itme.deviceId}}">
+    <radio value="{{item.deviceId}}" checked="{{item.checked}}"/>{{item.advertisDataHexString}}
+  </label>
+</radio-group>
+
+<view>
+  <button size='default' bindtap="connect">连接设备</button>
+</view>
