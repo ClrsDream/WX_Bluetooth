@@ -1,6 +1,8 @@
 var scanner = require('../../lib/bluetooth/scanner')
+var connecter = require('../../lib/bluetooth/connecter')
+
 var divices = [];
-var selectedDeviceID;
+var selectedDeviceid;
 
 Page({
   data: {
@@ -42,7 +44,16 @@ Page({
         divices.push(device);
         that.setData({
           items: divices
-        })
+        });
+        if (device.advertisDataHexString.indexOf('0101') === 0) {
+          console.log('deviceId', device.deviceId);
+          selectedDeviceid = device.deviceId;
+          scanner.stopScan({
+            success: (res) => {
+              connecter.create(device.deviceId);
+            }
+          });
+        }
       }
     });
   },
@@ -61,17 +72,10 @@ Page({
   },
   radioChange: function (e) {
     console.log('radio发生change事件', e);
-    selectedDeviceID = e.detail.value;
+    selectedDeviceid = e.detail.value;
   },
-  connect:function(e){
-    wx.createBLEConnection({
-      deviceId: selectedDeviceID,
-      success: function(res) {
-        console.log(res);
-      },
-      fail:function(err){
-        console.log(err);
-      }
-    })
+  connect: function (e) {
+    connecter.create(selectedDeviceid);
+    console.log(selectedDeviceid);
   }
 })
