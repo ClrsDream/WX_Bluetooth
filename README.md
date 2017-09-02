@@ -12,28 +12,19 @@
 
 ## 一些BUG
 1) 蓝牙在扫描过程中，获取本机蓝牙适配器状态(wx.getBluetoothAdapterState(OBJECT))。（Android独有，华为荣耀8、VIVO 7plus，6.5.13）
-
 available\Boolean\蓝牙适配器是否可用，值为true。
-
 discovering\Boolean\是否正在搜索设备，值为false。
-
 https://github.com/FFiot/WX_Bluetooth/issues/1
-
 2) 蓝牙在扫描过程中，再次启动扫描wx.startBluetoothDevicesDiscovery(OBJECT)：fail，errCode=10008。（Android独有，华为荣耀8、VIVO 7plus，6.5.13）
-
 https://github.com/FFiot/WX_Bluetooth/issues/2
-
 3) errorCode与errMsg混在一起。（IOS独有，IPHONE5s，微信6.5.15）
-
 https://github.com/FFiot/WX_Bluetooth/issues/3
-
 4) 蓝牙在扫描service下character时，如果有多个service，只能正常获取第一个service下的character，其余service获取的chara与第一个service相同。（IOS独有，IPHONE5s，微信6.5.15）
 
-## 移动设备蓝牙开启\关闭用两种状态
-
+## 移动设备蓝牙开启\关闭用两种状态，触发wx.onBluetoothAdapterStateChange回调
 1) wx.getBluetoothAdapterState(OBJECT)
-  ``关闭状态返回：drrCode:10000,errMsg:"getBluetoothAdapterState:fail"。此时开启蓝牙: wx.onBluetoothAdapterStateChange(CALLBACK)无回调。
-  ``开启状态返回：drrCode:10000,errMsg:"getBluetoothAdapterState:fail"。此时关闭蓝牙: wx.onBluetoothAdapterStateChange(CALLBACK)无回调。
+关闭状态返回：drrCode:10000,errMsg:"getBluetoothAdapterState:fail"。此时开启蓝牙: wx.onBluetoothAdapterStateChange(CALLBACK)无回调。
+开启状态返回：drrCode:10000,errMsg:"getBluetoothAdapterState:fail"。此时关闭蓝牙: wx.onBluetoothAdapterStateChange(CALLBACK)无回调。
 2) wx.getBluetoothAdapterState(OBJECT)
-  ``关闭状态返回：drrCode:10001,errMsg:"openBluetoothAdapter:fail"。此时开启蓝牙：wx.onBluetoothAdapterStateChange(CALLBACK)有回调。
-  ``开启状态返回：errMsg:"openBluetoothAdapter:ok"。此时开启蓝牙：wx.onBluetoothAdapterStateChange(CALLBACK)有回调。
+关闭状态返回：drrCode:10001,errMsg:"openBluetoothAdapter:fail"。此时开启蓝牙：wx.onBluetoothAdapterStateChange(CALLBACK)有回调。
+开启状态返回：errMsg:"openBluetoothAdapter:ok"。此时开启蓝牙：wx.onBluetoothAdapterStateChange(CALLBACK)有回调。
