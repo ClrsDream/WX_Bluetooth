@@ -4,6 +4,13 @@ var connecter = require('../../lib/bluetooth/connecter')
 var divices = [];
 var selectedDeviceid;
 
+const deviceOption = {
+  '0001': {
+    '36F5': { 'write': true },
+    '36F6': { 'notify': true }
+  }
+}
+
 Page({
   data: {
     items: []
@@ -19,7 +26,7 @@ Page({
     })
 
     scanner.startScan({
-      services: ['FEE7'],
+      services: ['0001'],
       allowDuplicatesKey: false,
       interval: 0,
       scanTime: 10,
@@ -50,7 +57,8 @@ Page({
           selectedDeviceid = device.deviceId;
           scanner.stopScan({
             success: (res) => {
-              connecter.create(device.deviceId);
+              device.deviceOption = deviceOption;
+              connecter.create(device);
             }
           });
         }
@@ -75,7 +83,10 @@ Page({
     selectedDeviceid = e.detail.value;
   },
   connect: function (e) {
-    connecter.create(selectedDeviceid);
+    connecter.create({
+      deviceId: selectedDeviceid,
+      deviceOption: deviceOption
+    });
     console.log(selectedDeviceid);
   }
 })
